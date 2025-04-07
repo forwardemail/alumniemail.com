@@ -6,7 +6,7 @@ Keep alumni connected to your institution forever without the high costs of Goog
 
 Trusted by leading universities including UMD, Tufts, Swarthmore, and the University of Cambridge
 
-[Get Started](https://forwardemail.net) | [Learn More](#learn-more)
+[Get Started](https://forwardemail.net) | [Learn More](https://forwardemail.net)
 
 ## Why Choose Alumni Email Forwarding?
 
