@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+ 
+ <style>
+ .dark-mode-fill { fill: #E21833; }
+ .dark-mode-text { fill: #FFFFFF; }
+ .light-mode-fill { fill: #E21833; }
+ .light-mode-text { fill: #000000; }
+ 
+ @media (prefers-color-scheme: dark) {
+ .dark-mode-fill { fill: #E21833; }
+ .dark-mode-text { fill: #FFFFFF; }
+ }
+ </style>
+ 
+ 
+ <path class="dark-mode-fill" d="M40,10 L160,10 C165,10 170,15 170,20 L170,60 C170,65 165,70 160,70 L40,70 C35,70 30,65 30,60 L30,20 C30,15 35,10 40,10 Z" />
+ 
+ 
+ <text x="100" y="45" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" class="dark-mode-text">UMD</text>
+ 
+ 
+ <text x="100" y="60" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" class="dark-mode-text">University of Maryland</text>
+</svg>

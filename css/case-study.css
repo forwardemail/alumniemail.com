@@ -1,0 +1,35 @@
+.case-study-highlight {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 800px;
+  margin: 0 auto 30px;
+  text-align: center;
+  border-left: 4px solid var(--primary-color);
+}
+
+.case-study-highlight h3 {
+  font-size: 22px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.case-study-highlight p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.case-study-highlight .btn-secondary {
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .case-study-highlight {
+    padding: 20px;
+  }
+  
+  .case-study-highlight h3 {
+    font-size: 20px;
+  }
+}

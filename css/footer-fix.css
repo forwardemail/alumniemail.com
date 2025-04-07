@@ -1,0 +1,82 @@
+/* Fix for AlumniEmail footer text color */
+footer {
+  background-color: var(--dark-color);
+  color: #fff;
+  padding: 60px 0 20px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-logo h2 {
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.footer-logo p {
+  color: #ffffff;
+}
+
+.footer-logo a {
+  color: var(--accent-color);
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.link-group h3 {
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.link-group ul li {
+  margin-bottom: 10px;
+}
+
+.link-group ul li a {
+  color: #ffffff;
+  transition: var(--transition);
+}
+
+.link-group ul li a:hover {
+  color: #fff;
+  opacity: 0.8;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+/* Fix for footer edit link and social links */
+.edit-link {
+  color: #ffffff;
+}
+
+.edit-link:hover {
+  color: #ffffff;
+  opacity: 0.8;
+}
+
+.edit-link svg {
+  fill: #ffffff;
+}
+
+.social-links a svg path {
+  fill: #ffffff;
+}
