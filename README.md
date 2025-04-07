@@ -75,7 +75,7 @@ const response = await fetch('https://api.forwardemail.net/v1/domains/example.ed
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer YOUR_API_KEY'
+    'Authorization': `Basic ${Buffer.from(YOUR_API_KEY + ":").toString('base64')}`
   },
   body: JSON.stringify({
     name: 'alumni.2025',
