@@ -67,7 +67,7 @@ Forward Email's powerful API enables universities to automate the creation and m
 
 The Forward Email API is RESTful, well-documented, and designed for developers to quickly implement robust email forwarding solutions for educational institutions of any size.
 
-[Explore API Documentation](https://forwardemail.net/developers)
+[Explore API Documentation](https://forwardemail.net/email-api)
 
 ```javascript
 // Example: Creating a new alumni email address
