@@ -192,7 +192,7 @@ const response = await fetch('https://api.forwardemail.net/v1/domains/example.ed
   },
   body: JSON.stringify({
     name: 'alumni.2025',
-    forwarded: 'graduate@personal-email.com',
+    recipients: ['graduate@personal-email.com'],
     labels: ['class-of-2025', 'engineering']
   })
 });
