@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Migrate Alumni Email from Google Workspace or Microsoft 365</title>
+<meta name="description" content="Move alumni accounts off Google Workspace or Microsoft 365: collect destinations, create aliases, switch MX records, export mail.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://alumniemail.com/migrate-from-google-workspace-microsoft-365/">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="theme-color" content="#1a365d">
+<meta name="author" content="Forward Email">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/images/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/fonts/graduate-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/style.min.css">
+<link rel="alternate" type="text/markdown" href="/migrate-from-google-workspace-microsoft-365/index.md" title="Markdown version">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="AlumniEmail">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Migrate Alumni Email from Google Workspace or Microsoft 365">
+<meta property="og:description" content="Move alumni accounts off Google Workspace or Microsoft 365: collect destinations, create aliases, switch MX records, export mail.">
+<meta property="og:url" content="https://alumniemail.com/migrate-from-google-workspace-microsoft-365/">
+<meta property="og:image" content="https://alumniemail.com/images/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AlumniEmail: lifetime alumni email forwarding for universities, from the Forward Email team">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Migrate Alumni Email from Google Workspace or Microsoft 365">
+<meta name="twitter:description" content="Move alumni accounts off Google Workspace or Microsoft 365: collect destinations, create aliases, switch MX records, export mail.">
+<meta name="twitter:image" content="https://alumniemail.com/images/og-image.jpg">
+<meta name="twitter:image:alt" content="AlumniEmail: lifetime alumni email forwarding for universities, from the Forward Email team">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://forwardemail.net/#organization","name":"Forward Email","url":"https://forwardemail.net","logo":"https://forwardemail.net/img/logo-square-180x180.png","sameAs":["https://github.com/forwardemail","https://x.com/fwdemail","https://www.youtube.com/forwardemail","https://www.reddit.com/r/forwardemail/"],"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"support@forwardemail.net","url":"https://forwardemail.net/en/faq"},{"@type":"ContactPoint","contactType":"security","email":"security@forwardemail.net","url":"https://forwardemail.net/en/security"}]},{"@type":"WebSite","@id":"https://alumniemail.com/#website","url":"https://alumniemail.com/","name":"AlumniEmail","description":"Guides for university IT and alumni relations teams on lifetime alumni email forwarding with Forward Email: how it works, DNS setup, migration from Google Workspace or Microsoft 365, sourced costs and a published university case study.","inLanguage":"en","publisher":{"@id":"https://forwardemail.net/#organization"}},{"@type":"WebPage","@id":"https://alumniemail.com/migrate-from-google-workspace-microsoft-365/#webpage","url":"https://alumniemail.com/migrate-from-google-workspace-microsoft-365/","name":"Migrate Alumni Email from Google Workspace or Microsoft 365","description":"Move alumni accounts off Google Workspace or Microsoft 365: collect destinations, create aliases, switch MX records, export mail.","inLanguage":"en","isPartOf":{"@id":"https://alumniemail.com/#website"},"publisher":{"@id":"https://forwardemail.net/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://alumniemail.com/images/og-image.jpg","width":1200,"height":630},"breadcrumb":{"@id":"https://alumniemail.com/migrate-from-google-workspace-microsoft-365/#breadcrumb"}},{"@type":"BreadcrumbList","@id":"https://alumniemail.com/migrate-from-google-workspace-microsoft-365/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://alumniemail.com/"},{"@type":"ListItem","position":2,"name":"Migration guide","item":"https://alumniemail.com/migrate-from-google-workspace-microsoft-365/"}]}]}</script>
+</head>
+<body>
+<!--email_off--><a class="skip-link" href="#main"><!--/email_off-->Skip to content</a>
+<header class="site-header">
+<div class="container header-content">
+<!--email_off--><a class="logo" href="/"><!--/email_off-->AlumniEmail</a>
+<nav aria-label="Main"><ul class="nav-links">
+<li><!--email_off--><a href="/"><!--/email_off-->Home</a></li>
+<li><!--email_off--><a href="/how-it-works/"><!--/email_off-->How it works</a></li>
+<li><!--email_off--><a href="/migrate-from-google-workspace-microsoft-365/" aria-current="page"><!--/email_off-->Migration</a></li>
+<li><!--email_off--><a href="/cost-comparison/"><!--/email_off-->Costs</a></li>
+<li><!--email_off--><a href="/case-study/"><!--/email_off-->Case study</a></li>
+<li><!--email_off--><a href="/faq/"><!--/email_off-->FAQ</a></li>
+<li><!--email_off--><a href="/about/"><!--/email_off-->About</a></li>
+<li><!--email_off--><a class="nav-cta" href="https://forwardemail.net/en/private-business-email"><!--/email_off-->Forward Email pricing</a></li>
+</ul></nav>
+</div>
+</header>
+<main id="main">
+<div class="hero page-hero">
+<div class="container">
+<div class="">
+<nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><!--email_off--><a href="/"><!--/email_off-->Home</a></li><li><span aria-current="page">Migration guide</span></li></ol></nav>
+<h1>How to move alumni email off Google Workspace or Microsoft 365</h1>
+<p class="lead">Moving alumni accounts to forwarding has three parts. Collect each graduate's personal address, create a forwarding alias with the same user name, then switch mail delivery for the alumni domain. Mail stored in the old accounts does not move by itself, so graduates who want it export it first.</p>
+
+</div>
+</div>
+</div>
+<section class="band" aria-labelledby="before-you-start">
+<div class="container">
+<div class="prose">
+<h2 id="before-you-start">Before you start</h2>
+<p>Make a short inventory so the cutover has no surprises:</p>
+<ul><li><strong>Accounts.</strong> Export the list of alumni accounts from the Google Admin console or the Microsoft 365 admin center, with each user name.</li><li><strong>Destinations.</strong> Collect a personal address for every graduate, for example from your alumni database or an opt-in form. Accounts without a destination can stay disabled until the graduate asks.</li><li><strong>Domain layout.</strong> Check whether alumni share a domain with staff and current students, or already have their own domain or subdomain.</li><li><strong>Sending needs.</strong> Decide whether alumni only receive mail through the forward, or also send from the address. Sending needs SMTP on a paid plan and SPF, DKIM and DMARC records.</li><li><strong>Communication.</strong> Plan the notices to alumni: what changes, when, and how to export old mail.</li></ul>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="option-1-alumni-have-their-own-domain-or-subdomain">
+<div class="container">
+<div class="prose">
+<h2 id="option-1-alumni-have-their-own-domain-or-subdomain">Option 1: alumni have their own domain or subdomain</h2>
+<p>This is the simplest case. If alumni addresses already live on a separate host name such as <code>alumni.example.edu</code>, you can move that host name to Forward Email in one step:</p>
+<ol class="steps">
+<li class="step">
+<h3 id="create-the-aliases">Create the aliases</h3>
+<p>Create one alias per account in Forward Email with the same user name, using the API or the dashboard. Turn on recipient verification if destinations come from an old or unconfirmed list.</p>
+</li>
+<li class="step">
+<h3 id="lower-the-ttl">Lower the TTL</h3>
+<p>A day before cutover, lower the TTL on the alumni domain's MX records so the change spreads faster.</p>
+</li>
+<li class="step">
+<h3 id="switch-the-mx-records">Switch the MX records</h3>
+<p>Replace the Google or Microsoft MX records for the alumni domain with <code>mx1.forwardemail.net</code> and <code>mx2.forwardemail.net</code>, and add the verification TXT record.</p>
+</li>
+<li class="step">
+<h3 id="watch-delivery">Watch delivery</h3>
+<p>Send test messages from outside providers. Check the Forward Email error logs, which keep 4xx and 5xx SMTP errors for 7 days.</p>
+</li>
+<li class="step">
+<h3 id="retire-the-old-accounts">Retire the old accounts</h3>
+<p>After graduates have had time to export their mail, suspend and then delete the old Google Workspace or Microsoft 365 accounts.</p>
+</li>
+</ol>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="option-2-alumni-share-the-main-domain-with-staff">
+<div class="container">
+<div class="prose">
+<h2 id="option-2-alumni-share-the-main-domain-with-staff">Option 2: alumni share the main domain with staff</h2>
+<p>Forward Email advises listing only one mail exchange in DNS and not using MX priority to split mail between two providers. Instead, keep the MX records pointing at your current provider and have it route addresses it does not host to Forward Email. Forward Email documents this setup under <!--email_off--><a href="https://forwardemail.net/en/faq#can-i-use-multiple-mx-exchanges-and-servers-for-advanced-forwarding"><!--/email_off-->multiple MX exchanges</a>:</p>
+<ul><li><strong>Google Workspace:</strong> set up a Gmail routing rule that sends mail for unrecognized addresses to <code>mx1.forwardemail.net</code> or <code>mx2.forwardemail.net</code>. See Google's help on <!--email_off--><a href="https://support.google.com/a/answer/6297084"><!--/email_off-->Gmail routing settings</a>.</li><li><strong>Microsoft 365:</strong> set up a connector that routes mail for addresses Microsoft 365 does not host to Forward Email. See Microsoft's guides on <!--email_off--><a href="https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/set-up-connectors-to-route-mail"><!--/email_off-->setting up connectors</a> and <!--email_off--><a href="https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/manage-mail-flow-for-multiple-locations"><!--/email_off-->mail flow with mailboxes in multiple locations</a>.</li></ul>
+<p>Once routing works, remove each alumni account from Google or Microsoft. Mail for that address then counts as unrecognized and goes to Forward Email, where the alias forwards it on. Many universities later move alumni to their own subdomain to remove this dependency.</p>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="what-happens-to-mail-already-in-the-old-accounts">
+<div class="container">
+<div class="prose">
+<h2 id="what-happens-to-mail-already-in-the-old-accounts">What happens to mail already in the old accounts?</h2>
+<p>Forwarding only handles new mail, so graduates who want their history should export it before the old account is deleted:</p>
+<div class="table-wrap"><table><caption>How graduates export mail from the old account</caption><thead><tr><th scope="col">Provider</th><th scope="col">Export format</th><th scope="col">How</th></tr></thead><tbody>
+<tr><th scope="row">Google Workspace (Gmail)</th><td>MBOX</td><td><!--email_off--><a href="https://takeout.google.com/settings/takeout/custom/gmail"><!--/email_off-->Google Takeout</a></td></tr>
+<tr><th scope="row">Microsoft 365 (Outlook)</th><td>PST</td><td><!--email_off--><a href="https://support.microsoft.com/en-us/office/back-up-your-email-e5845b0b-1aeb-424f-924c-aa1c33b18833"><!--/email_off-->Outlook export and backup</a></td></tr>
+</tbody></table></div>
+<p>Graduates can import the export into their personal mail account. If your university offers Forward Email mailboxes as well as forwarding, the <!--email_off--><a href="https://forwardemail.net/en/faq#how-do-i-import-and-migrate-my-existing-mailbox"><!--/email_off-->Forward Email FAQ</a> shows how to upload MBOX or EML files over IMAP with Thunderbird and the ImportExportTools NG add-on. Paid plans include 10 GB of pooled storage, and extra storage costs $3 per month for each additional 10 GB.</p>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="cutover-checklist">
+<div class="container">
+<div class="prose">
+<h2 id="cutover-checklist">Cutover checklist</h2>
+<ul><li>Every account on the inventory has an alias or a documented reason it does not.</li><li>Test messages from Gmail, Outlook.com and a university staff account all arrive at the destination.</li><li>SPF, DKIM and DMARC records are in place if alumni will send mail.</li><li>Alumni received notice, export instructions and a date for the old account's removal.</li><li>Your provisioning job creates new aliases for each graduating class through the <!--email_off--><a href="/how-it-works/#how-do-you-create-aliases-from-your-alumni-database"><!--/email_off-->API</a>.</li></ul>
+<p>Costs before and after a move are on the <!--email_off--><a href="/cost-comparison/"><!--/email_off-->cost comparison</a> page.</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-brand">
+<!--email_off--><a class="logo" href="/"><!--/email_off-->AlumniEmail</a>
+<p>Guides on lifetime alumni email forwarding for universities, written by the Forward Email team.</p>
+<p>Forward Email is an open-source email service. Its <!--email_off--><a href="https://github.com/forwardemail/forwardemail.net"><!--/email_off-->source code is on GitHub</a>.</p>
+</div>
+<div class="footer-links">
+<div>
+<h2>Alumni email guides</h2>
+<ul>
+<li><!--email_off--><a href="/"><!--/email_off-->Home</a></li>
+<li><!--email_off--><a href="/how-it-works/"><!--/email_off-->How it works</a></li>
+<li><!--email_off--><a href="/migrate-from-google-workspace-microsoft-365/"><!--/email_off-->Migration</a></li>
+<li><!--email_off--><a href="/cost-comparison/"><!--/email_off-->Costs</a></li>
+<li><!--email_off--><a href="/case-study/"><!--/email_off-->Case study</a></li>
+<li><!--email_off--><a href="/faq/"><!--/email_off-->FAQ</a></li>
+<li><!--email_off--><a href="/about/"><!--/email_off-->About</a></li>
+</ul>
+</div>
+<div>
+<h2>Forward Email</h2>
+<ul>
+<li><!--email_off--><a href="https://forwardemail.net/en/private-business-email"><!--/email_off-->Plans and pricing</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/blog/docs/alumni-email-forwarding-university-case-study"><!--/email_off-->University case study</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/email-api"><!--/email_off-->Email API reference</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/faq"><!--/email_off-->Forward Email FAQ</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/privacy"><!--/email_off-->Privacy policy</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/terms"><!--/email_off-->Terms of use</a></li>
+<li><!--email_off--><a href="https://github.com/forwardemail"><!--/email_off-->Forward Email on GitHub</a></li>
+<li><!--email_off--><a href="https://x.com/fwdemail"><!--/email_off-->Forward Email on X</a></li>
+<li><!--email_off--><a href="https://www.youtube.com/forwardemail"><!--/email_off-->Forward Email on YouTube</a></li>
+</ul>
+</div>
+<div>
+<h2>About this site</h2>
+<ul>
+<li><!--email_off--><a href="https://github.com/forwardemail/alumniemail.com"><!--/email_off-->Source on GitHub</a></li>
+<li><!--email_off--><a href="https://github.com/forwardemail/alumniemail.com/issues"><!--/email_off-->Report a problem</a></li>
+<li><!--email_off--><a href="/about/#privacy-on-this-site"><!--/email_off-->Privacy on this site</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>Run by the Forward Email team. Not affiliated with the universities named on this site.</p>
+<p><!--email_off--><a href="https://github.com/forwardemail/alumniemail.com/blob/main/content/migrate-from-google-workspace-microsoft-365.md"><!--/email_off-->Edit this page on GitHub</a></p>
+</div>
+</div>
+</footer>
+</body>
+</html>

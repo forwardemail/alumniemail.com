@@ -1,0 +1,486 @@
+# AlumniEmail: full text
+
+> Guides for university IT and alumni relations teams on lifetime alumni email forwarding with Forward Email: how it works, DNS setup, migration from Google Workspace or Microsoft 365, sourced costs and a published university case study.
+
+# Lifetime alumni email forwarding for universities
+
+Give every graduate a permanent address on your university domain. Forward Email delivers each message to the personal inbox the graduate chooses, for a flat $250 per month with no fee per alumnus.
+
+Source: https://alumniemail.com/
+
+## What is alumni email forwarding?
+
+Alumni email forwarding gives each graduate an address on the university's domain, such as `jane.doe@alumni.example.edu`, and sends every message for that address on to a personal inbox. The university keeps control of the address. There is no per-person mailbox to license, back up or secure.
+
+Universities often give students full mailboxes on Google Workspace or Microsoft 365, then face a choice at graduation: keep paying for those accounts, or shut them down and break every address graduates have printed on resumes and business cards. Forwarding keeps the address alive and drops the mailbox. See [how alumni email forwarding works](https://alumniemail.com/how-it-works/) for the DNS and alias details.
+
+## Why universities use Forward Email for alumni addresses
+
+### One flat price
+The Enterprise plan costs $250 per month for unlimited domains, and aliases have no per-user fee. A university with 5,000 alumni and one with 100,000 pay the same. See the [cost comparison](https://alumniemail.com/cost-comparison/).
+
+### Addresses that last
+Graduates keep one university address for life. When they change jobs or personal providers, the destination changes and the address stays the same.
+
+### No stored mail
+Forward Email processes forwarded mail in memory and does not write it to disk. It keeps error logs for 4xx and 5xx SMTP responses for 7 days, with headers but without message bodies or attachments.
+
+### Open source
+The Forward Email code is public on [GitHub](https://github.com/forwardemail/forwardemail.net), so your security team can read how mail is handled. You can also self-host it with Docker.
+
+### Email authentication built in
+SPF, DKIM, DMARC, ARC and SRS are supported on every plan. SRS is set up for you, which preserves SPF validation when mail is forwarded to a graduate's personal provider.
+
+### Automation through the API
+Create, update and disable alumni aliases from your alumni database with the [REST API](https://forwardemail.net/en/email-api). The Enterprise plan includes unlimited API requests.
+
+## Which universities use Forward Email for alumni email?
+
+Forward Email's [published case study](https://forwardemail.net/en/blog/docs/alumni-email-forwarding-university-case-study) names four institutions whose alumni email runs on Forward Email: the University of Cambridge, the University of Maryland, Tufts University and Swarthmore College. The case study reports these annual figures:
+
+Table: Annual alumni email costs reported in the Forward Email case study
+| University | Alumni count | Annual cost with Google | Annual cost with Forward Email | Annual savings |
+|---|---|---|---|---|
+| University of Cambridge | 30,000 | $90,000 | $3,000 | $87,000 |
+| Swarthmore College | 5,000 | $15,000 | $3,000 | $12,000 |
+| Tufts University | 12,000 | $36,000 | $3,000 | $33,000 |
+| University of Maryland | 25,000 | $75,000 | $3,000 | $72,000 |
+
+Figures as published in the Forward Email case study. Read the [case study summary](https://alumniemail.com/case-study/) for the Cambridge details.
+
+## How does setup work?
+
+### Pick the domain
+Use your main domain or a subdomain such as `alumni.example.edu`. A subdomain lets staff and student mail stay where it is.
+
+### Point MX records
+Set two MX records for that domain to `mx1.forwardemail.net` and `mx2.forwardemail.net`.
+
+### Create aliases
+Add one alias per graduate in the dashboard or through the API, each with a personal destination address.
+
+### Test and switch
+Send test messages, check SPF, DKIM and DMARC results, then announce the new addresses to alumni.
+
+The [step-by-step guide](https://alumniemail.com/how-it-works/) covers DNS records, recipient verification and API examples. Moving existing accounts off Google Workspace or Microsoft 365 has its own [migration guide](https://alumniemail.com/migrate-from-google-workspace-microsoft-365/).
+
+## Questions from IT teams
+
+Common questions about storage, logging, sending mail, DPAs and pricing have short answers in the [FAQ for university IT staff](https://alumniemail.com/faq/). The Forward Email team runs this site; [about AlumniEmail](https://alumniemail.com/about/) lists its sources and contacts.
+
+[Read the FAQ](https://alumniemail.com/faq/)
+
+[Compare costs](https://alumniemail.com/cost-comparison/)
+
+[Contact Forward Email](mailto:support@forwardemail.net)
+
+---
+
+# How alumni email forwarding works
+
+Mail for an alumni address reaches Forward Email through your domain's MX records. Forward Email looks up the alias, then sends the message on to the graduate's personal inbox without storing it.
+
+Source: https://alumniemail.com/how-it-works/
+
+## What happens when someone emails an alumni address?
+
+A message to `jane.doe@alumni.example.edu` follows the same path as any other email, with one extra hop:
+
+1. The sender's mail server looks up the MX records for `alumni.example.edu` and finds `mx1.forwardemail.net` and `mx2.forwardemail.net`.
+2. Forward Email accepts the connection and checks the sender against its allowlist, denylist, greylisting and rate limits.
+3. It reads the alias configuration for `jane.doe` and finds the destination, for example a Gmail or Outlook.com address.
+4. It rewrites the envelope sender with the Sender Rewriting Scheme (SRS) and adds ARC headers, so authentication results survive the forward.
+5. It delivers the message to the destination over TLS. The message is processed in memory and is not written to disk.
+
+The [Forward Email FAQ](https://forwardemail.net/en/faq#how-does-your-email-forwarding-system-work) describes each SMTP step in detail.
+
+## Which DNS records do you need?
+
+You need two MX records on the domain that holds the alumni addresses. On a paid plan you also add one TXT record that proves you own the domain. The verification value comes from your Forward Email dashboard.
+
+Table: DNS records for an alumni domain on Forward Email
+| Name | Type | Priority | Value |
+|---|---|---|---|
+| `alumni` (or `@` for the root domain) | MX | 0 | `mx1.forwardemail.net` |
+| `alumni` (or `@` for the root domain) | MX | 0 | `mx2.forwardemail.net` |
+| `alumni` (or `@` for the root domain) | TXT | | `forward-email-site-verification=` followed by your value |
+
+Remove any other MX records on that name. Both Forward Email records must exist. DNS changes can take up to 24 to 48 hours to reach every resolver, though they often apply sooner, so lower the TTL a day ahead if you are switching from another provider. Source: [How do I get started and set up email forwarding?](https://forwardemail.net/en/faq#how-do-i-get-started-and-set-up-email-forwarding)
+
+If alumni will also send mail from their address, add SPF, DKIM and DMARC records as described in the [Forward Email FAQ](https://forwardemail.net/en/faq#how-do-i-set-up-spf-for-forward-email). Forward Email's SPF value is `v=spf1 a include:spf.forwardemail.net -all`.
+
+## Should alumni use a subdomain?
+
+A subdomain is the simplest choice when staff and current students already receive mail on the main domain through Google Workspace or Microsoft 365. MX records belong to one host name, so `alumni.example.edu` can point to Forward Email while `example.edu` keeps its current provider. Nothing changes for staff mail.
+
+If alumni addresses must stay on the main domain, the domain can still have only one set of MX records. In that case your current provider receives all mail and routes addresses it does not recognize to Forward Email. The [migration guide](https://alumniemail.com/migrate-from-google-workspace-microsoft-365/) covers both options.
+
+On paid plans you can also turn on **wildcard subdomain forwarding**, which lets every subdomain without its own records inherit the root domain's aliases. It is off by default and set per domain.
+
+## How are alumni addresses set up?
+
+Each graduate gets one **alias**. An alias has a name (the part before the `@`) and one or more recipients.
+
+- **One alias per graduate.** `jane.doe` forwards to `jane@example.com`. Graduates can have more than one recipient.
+- **Recipient verification.** With recipient verification on, a new destination receives a confirmation link, and mail flows only after the graduate clicks it. This stops typos from sending alumni mail to a stranger.
+- **Catch-all and patterns.** A catch-all alias receives mail for any name that has no alias. Regular expressions can route whole patterns of names.
+- **Disabling an address.** A disabled alias can accept mail quietly (code 250), ask senders to retry later (421) or reject mail permanently (550).
+- **Labels.** Labels such as a class year help you find and update groups of aliases.
+
+## Set up alumni forwarding step by step
+
+### Get an Enterprise agreement
+Contact Forward Email for the Enterprise plan. It covers use by people outside your staff, such as alumni, which the standard terms do not.
+
+### Add the domain
+Add `alumni.example.edu` in the Forward Email dashboard and copy the verification value it shows.
+
+### Publish DNS records
+Add the two MX records and the TXT verification record at your DNS provider, then run the verification check.
+
+### Create aliases
+Import aliases through the API from your alumni database, or add them in the dashboard for a pilot group.
+
+### Test and announce
+Send test messages from outside providers, confirm delivery and headers, then tell alumni about their addresses.
+
+## How do you create aliases from your alumni database?
+
+The [Forward Email API](https://forwardemail.net/en/email-api#create-new-domain-alias) creates an alias with one request. Authenticate with your API token as the Basic Auth user name and an empty password.
+
+```sh
+curl -X POST https://api.forwardemail.net/v1/domains/alumni.example.edu/aliases \
+  -u "$API_TOKEN:" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "jane.doe", "recipients": ["jane@example.com"], "labels": ["class-of-2025"], "has_recipient_verification": true}'
+```
+
+The same request from Node.js, for a nightly sync job:
+
+```js
+// Create a lifetime alumni address for one graduate
+const token = process.env.FORWARD_EMAIL_API_TOKEN;
+const response = await fetch('https://api.forwardemail.net/v1/domains/alumni.example.edu/aliases', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: 'Basic ' + Buffer.from(token + ':').toString('base64')
+  },
+  body: JSON.stringify({
+    name: 'jane.doe',
+    recipients: ['jane@example.com'],
+    labels: ['class-of-2025'],
+    has_recipient_verification: true
+  })
+});
+const alias = await response.json();
+```
+
+To change a destination later, send `PUT /v1/domains/alumni.example.edu/aliases/:alias_id` with new `recipients`. To retire an address, set `is_enabled` to `false`. The [API reference](https://forwardemail.net/en/email-api) lists every field.
+
+## Does the free plan work for alumni email?
+
+The free plan forwards mail with only MX and TXT records and no account. It is meant for your own addresses. On the free plan the forwarding rules live in public TXT records, so anyone can look up where each address forwards. Forward Email's standard terms also do not cover a service used by third parties such as alumni. Paid plans keep aliases out of public DNS, and the Enterprise plan adds a terms exception for third parties and onboarding help. See [Forward Email's Enterprise details](https://forwardemail.net/en/faq#what-is-included-in-the-enterprise-license).
+
+---
+
+# How to move alumni email off Google Workspace or Microsoft 365
+
+Moving alumni accounts to forwarding has three parts. Collect each graduate's personal address, create a forwarding alias with the same user name, then switch mail delivery for the alumni domain. Mail stored in the old accounts does not move by itself, so graduates who want it export it first.
+
+Source: https://alumniemail.com/migrate-from-google-workspace-microsoft-365/
+
+## Before you start
+
+Make a short inventory so the cutover has no surprises:
+
+- **Accounts.** Export the list of alumni accounts from the Google Admin console or the Microsoft 365 admin center, with each user name.
+- **Destinations.** Collect a personal address for every graduate, for example from your alumni database or an opt-in form. Accounts without a destination can stay disabled until the graduate asks.
+- **Domain layout.** Check whether alumni share a domain with staff and current students, or already have their own domain or subdomain.
+- **Sending needs.** Decide whether alumni only receive mail through the forward, or also send from the address. Sending needs SMTP on a paid plan and SPF, DKIM and DMARC records.
+- **Communication.** Plan the notices to alumni: what changes, when, and how to export old mail.
+
+## Option 1: alumni have their own domain or subdomain
+
+This is the simplest case. If alumni addresses already live on a separate host name such as `alumni.example.edu`, you can move that host name to Forward Email in one step:
+
+### Create the aliases
+Create one alias per account in Forward Email with the same user name, using the API or the dashboard. Turn on recipient verification if destinations come from an old or unconfirmed list.
+
+### Lower the TTL
+A day before cutover, lower the TTL on the alumni domain's MX records so the change spreads faster.
+
+### Switch the MX records
+Replace the Google or Microsoft MX records for the alumni domain with `mx1.forwardemail.net` and `mx2.forwardemail.net`, and add the verification TXT record.
+
+### Watch delivery
+Send test messages from outside providers. Check the Forward Email error logs, which keep 4xx and 5xx SMTP errors for 7 days.
+
+### Retire the old accounts
+After graduates have had time to export their mail, suspend and then delete the old Google Workspace or Microsoft 365 accounts.
+
+## Option 2: alumni share the main domain with staff
+
+Forward Email advises listing only one mail exchange in DNS and not using MX priority to split mail between two providers. Instead, keep the MX records pointing at your current provider and have it route addresses it does not host to Forward Email. Forward Email documents this setup under [multiple MX exchanges](https://forwardemail.net/en/faq#can-i-use-multiple-mx-exchanges-and-servers-for-advanced-forwarding):
+
+- **Google Workspace:** set up a Gmail routing rule that sends mail for unrecognized addresses to `mx1.forwardemail.net` or `mx2.forwardemail.net`. See Google's help on [Gmail routing settings](https://support.google.com/a/answer/6297084).
+- **Microsoft 365:** set up a connector that routes mail for addresses Microsoft 365 does not host to Forward Email. See Microsoft's guides on [setting up connectors](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/set-up-connectors-to-route-mail) and [mail flow with mailboxes in multiple locations](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/manage-mail-flow-for-multiple-locations).
+
+Once routing works, remove each alumni account from Google or Microsoft. Mail for that address then counts as unrecognized and goes to Forward Email, where the alias forwards it on. Many universities later move alumni to their own subdomain to remove this dependency.
+
+## What happens to mail already in the old accounts?
+
+Forwarding only handles new mail, so graduates who want their history should export it before the old account is deleted:
+
+Table: How graduates export mail from the old account
+| Provider | Export format | How |
+|---|---|---|
+| Google Workspace (Gmail) | MBOX | [Google Takeout](https://takeout.google.com/settings/takeout/custom/gmail) |
+| Microsoft 365 (Outlook) | PST | [Outlook export and backup](https://support.microsoft.com/en-us/office/back-up-your-email-e5845b0b-1aeb-424f-924c-aa1c33b18833) |
+
+Graduates can import the export into their personal mail account. If your university offers Forward Email mailboxes as well as forwarding, the [Forward Email FAQ](https://forwardemail.net/en/faq#how-do-i-import-and-migrate-my-existing-mailbox) shows how to upload MBOX or EML files over IMAP with Thunderbird and the ImportExportTools NG add-on. Paid plans include 10 GB of pooled storage, and extra storage costs $3 per month for each additional 10 GB.
+
+## Cutover checklist
+
+- Every account on the inventory has an alias or a documented reason it does not.
+- Test messages from Gmail, Outlook.com and a university staff account all arrive at the destination.
+- SPF, DKIM and DMARC records are in place if alumni will send mail.
+- Alumni received notice, export instructions and a date for the old account's removal.
+- Your provisioning job creates new aliases for each graduating class through the [API](https://alumniemail.com/how-it-works/#how-do-you-create-aliases-from-your-alumni-database).
+
+Costs before and after a move are on the [cost comparison](https://alumniemail.com/cost-comparison/) page.
+
+---
+
+# Alumni email cost comparison
+
+Forward Email's Enterprise plan costs a flat $250 per month, or $3,000 per year, for unlimited domains and aliases. Per-user suites charge for every account, so their cost grows with each graduating class.
+
+Source: https://alumniemail.com/cost-comparison/
+
+## What does Forward Email cost a university?
+
+The Enterprise plan is $250 per month for unlimited domains, quoted and invoiced directly. It includes everything in the Team plan plus unlimited API requests, a terms exception for third-party use such as alumni, a countersigned agreement and DPA, a dedicated support chatroom and onboarding help. Aliases have no per-user fee. Source: [Forward Email pricing](https://forwardemail.net/en/private-business-email) and [Enterprise license details](https://forwardemail.net/en/faq#what-is-included-in-the-enterprise-license).
+
+Forwarding needs no mailbox storage. If you also give alumni IMAP mailboxes, paid plans include 10 GB of pooled storage, and each additional 10 GB costs $3 per month.
+
+## How does that compare with per-user providers?
+
+Forward Email's [university case study](https://forwardemail.net/en/blog/docs/alumni-email-forwarding-university-case-study) lists these figures for 100,000 alumni:
+
+Table: Cost for 100,000 alumni by solution, from the Forward Email case study
+| Solution | Cost per alumnus (annual) | Cost for 100,000 alumni |
+|---|---|---|
+| Google Workspace for Business | $72 | $7,200,000 |
+| Google Workspace for Education | Free (Education Fundamentals), $3/student/year (Education Standard), $5/student/year (Education Plus) | Free to $500,000 |
+| Microsoft 365 Business | $60 | $6,000,000 |
+| Microsoft 365 Education | Free (A1), $38-55/faculty/year (A3), $65-96/faculty/year (A5) | Free to $96,000 |
+| Self-hosted Exchange | $45 | $4,500,000 |
+| Forward Email Enterprise | Fixed $250/month | $3,000/year |
+
+Figures as published in the Forward Email case study. Vendor prices change, so confirm current list prices with Google and Microsoft before you budget. The case study notes that the free education tiers are limited: Google's free tier to core services and Microsoft's A1 tier to web versions.
+
+## What did the case study universities save?
+
+The case study reports these annual figures for its four named universities. The Google column works out to $3 per alumnus per year, the Education Standard rate.
+
+Table: Annual alumni email costs reported in the Forward Email case study
+| University | Alumni count | Annual cost with Google | Annual cost with Forward Email | Annual savings |
+|---|---|---|---|---|
+| University of Cambridge | 30,000 | $90,000 | $3,000 | $87,000 |
+| Swarthmore College | 5,000 | $15,000 | $3,000 | $12,000 |
+| Tufts University | 12,000 | $36,000 | $3,000 | $33,000 |
+| University of Maryland | 25,000 | $75,000 | $3,000 | $72,000 |
+
+## Estimate your own cost
+
+Enter your alumni count and pick a per-alumnus rate from the case study table. The estimate multiplies the two and compares the result with Forward Email Enterprise at $3,000 per year. It leaves out storage, staff time and any discounts you may have.
+
+## Costs that are not on the invoice
+
+Per-user mailboxes also carry work that forwarding removes. The case study lists the problems universities face with full alumni mailboxes: per-user licenses that grow with every class, administration of thousands of accounts, security exposure from dormant accounts and growing storage needs. With forwarding there is no alumni mailbox to secure or store, and new aliases can be created by the [API](https://alumniemail.com/how-it-works/#how-do-you-create-aliases-from-your-alumni-database) as part of graduation.
+
+See the [migration guide](https://alumniemail.com/migrate-from-google-workspace-microsoft-365/) for the steps to move existing accounts.
+
+---
+
+# University alumni email case study summary
+
+Forward Email's published case study describes how the University of Cambridge, the University of Maryland, Tufts University and Swarthmore College run alumni email on Forward Email. This page summarizes it and links to the full text.
+
+Source: https://alumniemail.com/case-study/
+
+## Who is in the case study?
+
+The [full case study](https://forwardemail.net/en/blog/docs/alumni-email-forwarding-university-case-study) states that Forward Email powers the alumni email systems of four institutions:
+
+- University of Cambridge
+- University of Maryland
+- Tufts University
+- Swarthmore College
+
+These names come from Forward Email's own publication. This site is not affiliated with these universities, and none of them has reviewed or endorsed this page.
+
+## What problem were the universities solving?
+
+The case study describes why full mailboxes do not fit graduate addresses:
+
+- **Cost.** Per-user licensing becomes hard to sustain for large graduate populations.
+- **Administration.** Thousands of accounts take IT time to manage.
+- **Security.** Dormant accounts increase exposure.
+- **Flexibility.** Mailbox systems are not built for forwarding-only addresses.
+- **Privacy.** Many providers scan message content.
+
+## What approach did Forward Email take?
+
+The case study lists five parts of the model:
+
+- Email forwarding instead of hosting
+- Flat-fee pricing instead of per-user costs
+- Open-source code for transparency
+- No content scanning
+- Features for university identity management, such as API provisioning, batch operations and alias management for departments
+
+## What did the case study report for Cambridge?
+
+The University of Cambridge wanted to give alumni `@cam.ac.uk` addresses while reducing IT overhead and cost. According to the case study:
+
+### The challenge
+High costs for separate email infrastructure, administration of thousands of accounts, security concerns with dormant accounts, limited integration with alumni database systems and growing storage needs.
+
+### The solution
+Forwarding for all of these `@cam.ac.uk` addresses, a custom-branded portal for alumni self-service, API integration with Cambridge's alumni database and email security setup.
+
+### The results
+A substantial cost reduction compared with the previous solution, 99.9% email delivery reliability as reported in the case study, simpler administration through automation and positive feedback from graduates on usability.
+
+## What did each university save?
+
+The case study publishes these annual figures:
+
+Table: Annual alumni email costs reported in the Forward Email case study
+| University | Alumni count | Annual cost with Google | Annual cost with Forward Email | Annual savings |
+|---|---|---|---|---|
+| University of Cambridge | 30,000 | $90,000 | $3,000 | $87,000 |
+| Swarthmore College | 5,000 | $15,000 | $3,000 | $12,000 |
+| Tufts University | 12,000 | $36,000 | $3,000 | $33,000 |
+| University of Maryland | 25,000 | $75,000 | $3,000 | $72,000 |
+
+The Forward Email figure is the Enterprise plan at $250 per month. The [cost comparison](https://alumniemail.com/cost-comparison/) page puts these numbers next to other providers and includes a calculator.
+
+## How was it implemented?
+
+The case study describes a phased process:
+
+1. Assessment of the current email system, graduate records and requirements, with IT, alumni relations and administration.
+2. A migration plan by graduating cohort, with both systems running in parallel during the transition.
+3. Technical setup: DNS configuration and verification, API integration and email authentication (SPF, DKIM and DMARC).
+4. Branded portals, plus documentation for IT staff and graduates.
+5. Ongoing support after launch.
+
+The [how it works](https://alumniemail.com/how-it-works/) and [migration](https://alumniemail.com/migrate-from-google-workspace-microsoft-365/) guides cover the same steps in more technical detail.
+
+## Read the full case study
+
+[Read the case study on forwardemail.net](https://forwardemail.net/en/blog/docs/alumni-email-forwarding-university-case-study)
+
+[Questions from IT teams](https://alumniemail.com/faq/)
+
+---
+
+# Alumni email forwarding FAQ for IT staff
+
+Short answers to the questions university IT, security and alumni relations teams ask about running lifetime alumni addresses on Forward Email. Each answer links to the Forward Email source.
+
+Source: https://alumniemail.com/faq/
+
+## Service and setup
+
+### What is alumni email forwarding?
+It is a lifetime address on the university's domain that delivers each message to a personal inbox the graduate chooses. The university keeps the address and the graduate keeps receiving mail when they change jobs or providers. There is no alumni mailbox to license or store.
+
+### Which DNS records does Forward Email need?
+Two MX records, `mx1.forwardemail.net` and `mx2.forwardemail.net`, both with priority 0, on the domain or subdomain that holds the alumni addresses. Paid plans add one TXT record, `forward-email-site-verification=` with the value from your dashboard. See [how it works](https://alumniemail.com/how-it-works/#which-dns-records-do-you-need).
+
+### Can staff mail stay on Google Workspace or Microsoft 365?
+Yes. Put alumni on a subdomain such as `alumni.example.edu` and point only that subdomain's MX records at Forward Email. If alumni must share the main domain, keep your current MX records and have Google or Microsoft route addresses they do not host to Forward Email. The [migration guide](https://alumniemail.com/migrate-from-google-workspace-microsoft-365/) explains both options.
+
+### How long does setup take?
+Forward Email estimates under 10 minutes for the DNS setup itself. DNS changes can take up to 24 to 48 hours to reach every resolver. Planning, alias import and alumni notices take longer and depend on your institution.
+
+### Can we create alumni addresses automatically?
+Yes. The [REST API](https://forwardemail.net/en/email-api) creates, lists, updates and deletes aliases, so a nightly job can add each graduating class from your alumni database. The Enterprise plan has no API rate limit. See the [API example](https://alumniemail.com/how-it-works/#how-do-you-create-aliases-from-your-alumni-database).
+
+### How do alumni change their forwarding address?
+Your team or your own alumni portal updates the alias recipients through the dashboard or the API. The case study describes a custom-branded self-service portal for Cambridge alumni. Recipient verification can require each new destination to confirm by email before mail flows.
+
+## Privacy and security
+
+### Does Forward Email store forwarded alumni mail?
+No. Forward Email processes forwarded mail in memory and does not write it to disk. It stores error logs for 4xx and 5xx SMTP responses for 7 days, with the error, envelope and headers but not the body or attachments. Source: [Do you store emails and their contents?](https://forwardemail.net/en/faq#do-you-store-emails-and-their-contents)
+
+### Does forwarding break SPF or DMARC at the destination?
+Forward Email rewrites the envelope sender with SRS, which preserves SPF validation through the forward, and supports ARC so receiving providers can see the original authentication results. SPF, DKIM, DMARC, ARC and SRS are supported on every plan.
+
+### Is the traffic encrypted?
+Yes. Forward Email enforces TLS 1.2 or newer for its connections, including SMTP, and supports MTA-STS. Source: [Do you use TLS encryption for email forwarding?](https://forwardemail.net/en/faq#do-you-use-tls-encryption-for-email-forwarding)
+
+### Does Forward Email read or scan alumni mail for ads?
+No. Forward Email does not read mail or sell data, and the case study states it never scans email content. The code is open source, so your team can check how mail is handled.
+
+### Is there a Data Processing Agreement?
+Yes. The DPA at [forwardemail.net/dpa](https://forwardemail.net/en/dpa) is accepted with the terms of service. A countersigned copy and custom DPA terms come with the Enterprise license. See [Forward Email's GDPR page](https://forwardemail.net/en/gdpr).
+
+### Can we audit or self-host the code?
+Yes. The service is open source on [GitHub](https://github.com/forwardemail/forwardemail.net) and can be self-hosted with Docker using the [self-hosted guide](https://forwardemail.net/en/self-hosted).
+
+## Plans and pricing
+
+### How much does alumni email forwarding cost?
+The Enterprise plan is $250 per month for unlimited domains, with no fee per alias. That is $3,000 per year whether you serve 5,000 or 100,000 alumni. Mailbox storage, if you offer it, is extra at $3 per month per 10 GB. See the [cost comparison](https://alumniemail.com/cost-comparison/).
+
+### Why not use the free plan?
+The free plan stores forwarding rules in public DNS TXT records, so anyone can look up where an address forwards. Forward Email's standard terms also do not cover a service used by third parties such as alumni. The Enterprise license adds that terms exception. Source: [What is included in the Enterprise License?](https://forwardemail.net/en/faq#what-is-included-in-the-enterprise-license)
+
+### Can alumni send mail from their university address?
+Yes, if you allow it. Paid plans include outbound SMTP. Each domain needs approval before it can send, and sending limits grow with sender reputation. The free plan only forwards incoming mail.
+
+### Which universities use Forward Email for alumni?
+Forward Email's [case study](https://alumniemail.com/case-study/) names the University of Cambridge, the University of Maryland, Tufts University and Swarthmore College.
+
+### How do we get started?
+Email [support@forwardemail.net](mailto:support@forwardemail.net) or use the [Forward Email help form](https://forwardemail.net/en/help) (sign-in required) with your institution's legal name, registered address, registration and VAT numbers where they apply, and the name, title and email of the person who will sign. Forward Email replies with an Enterprise agreement through DocuSign.
+
+---
+
+# About AlumniEmail
+
+AlumniEmail is a guide to lifetime alumni email forwarding for universities. The Forward Email team writes and maintains it, and every claim about Forward Email links to a page on forwardemail.net.
+
+Source: https://alumniemail.com/about/
+
+## Who runs this site?
+
+The Forward Email team runs AlumniEmail. [Forward Email](https://forwardemail.net) is an open-source email service for custom domains. It supports IMAP, POP3, SMTP, CalDAV and CardDAV, and it can be self-hosted with Docker. Its founder was one of the first employees at DuckDuckGo.
+
+This site explains one use of Forward Email: [lifetime alumni addresses on a university domain](https://alumniemail.com/). It is not affiliated with any university. University names appear only where Forward Email's [published case study](https://forwardemail.net/en/blog/docs/alumni-email-forwarding-university-case-study) names them, and no university has reviewed or endorsed this site.
+
+## Where do the numbers come from?
+
+Prices for Forward Email come from the [pricing page](https://forwardemail.net/en/private-business-email) and the [Forward Email FAQ](https://forwardemail.net/en/faq). University names, alumni counts and the Google, Microsoft and Exchange cost figures come from the case study. Each page links to its source next to the claim. Vendor prices change, so confirm current figures before you budget.
+
+## How do I contact the team?
+
+- **About Forward Email for your university:** email [support@forwardemail.net](mailto:support@forwardemail.net).
+- **About this site:** open an issue on [GitHub](https://github.com/forwardemail/alumniemail.com/issues).
+- **Security reports:** email [security@forwardemail.net](mailto:security@forwardemail.net), as the Forward Email [security policy](https://forwardemail.net/en/security) describes. This site also publishes a `security.txt` file at `/.well-known/security.txt`.
+
+## Source code
+
+The site's source is public at [github.com/forwardemail/alumniemail.com](https://github.com/forwardemail/alumniemail.com). Pages are written in Markdown under `content/` and turned into static HTML by a small Node.js script with no dependencies. Every page also has a Markdown copy at `index.md` in the same folder, and `/llms.txt` lists them for AI tools.
+
+## Privacy on this site
+
+This site sets no cookies and runs no analytics, trackers or third-party scripts. Fonts, styles and images load from this domain only. The one script on the site runs the cost calculator in your browser and sends nothing anywhere.
+
+Requests to alumniemail.com pass through Cloudflare, which runs as a CDN and proxy in front of GitHub Pages and processes the IP address of each visitor ([Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/)). GitHub Pages hosts the files and logs the IP address of each visitor for security purposes ([GitHub Pages documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages)); the [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) covers that data. For Forward Email's own service, see the [Forward Email privacy policy](https://forwardemail.net/en/privacy).

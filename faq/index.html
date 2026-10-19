@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alumni Email Forwarding FAQ for University IT Staff</title>
+<meta name="description" content="Answers for university IT staff on alumni email forwarding: storage, logs, DNS, Google and Microsoft coexistence, API and price.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://alumniemail.com/faq/">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="theme-color" content="#1a365d">
+<meta name="author" content="Forward Email">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/images/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/fonts/graduate-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/style.min.css">
+<link rel="alternate" type="text/markdown" href="/faq/index.md" title="Markdown version">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="AlumniEmail">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Alumni Email Forwarding FAQ for University IT Staff">
+<meta property="og:description" content="Answers for university IT staff on alumni email forwarding: storage, logs, DNS, Google and Microsoft coexistence, API and price.">
+<meta property="og:url" content="https://alumniemail.com/faq/">
+<meta property="og:image" content="https://alumniemail.com/images/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AlumniEmail: lifetime alumni email forwarding for universities, from the Forward Email team">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alumni Email Forwarding FAQ for University IT Staff">
+<meta name="twitter:description" content="Answers for university IT staff on alumni email forwarding: storage, logs, DNS, Google and Microsoft coexistence, API and price.">
+<meta name="twitter:image" content="https://alumniemail.com/images/og-image.jpg">
+<meta name="twitter:image:alt" content="AlumniEmail: lifetime alumni email forwarding for universities, from the Forward Email team">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://forwardemail.net/#organization","name":"Forward Email","url":"https://forwardemail.net","logo":"https://forwardemail.net/img/logo-square-180x180.png","sameAs":["https://github.com/forwardemail","https://x.com/fwdemail","https://www.youtube.com/forwardemail","https://www.reddit.com/r/forwardemail/"],"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"support@forwardemail.net","url":"https://forwardemail.net/en/faq"},{"@type":"ContactPoint","contactType":"security","email":"security@forwardemail.net","url":"https://forwardemail.net/en/security"}]},{"@type":"WebSite","@id":"https://alumniemail.com/#website","url":"https://alumniemail.com/","name":"AlumniEmail","description":"Guides for university IT and alumni relations teams on lifetime alumni email forwarding with Forward Email: how it works, DNS setup, migration from Google Workspace or Microsoft 365, sourced costs and a published university case study.","inLanguage":"en","publisher":{"@id":"https://forwardemail.net/#organization"}},{"@type":"FAQPage","@id":"https://alumniemail.com/faq/#webpage","url":"https://alumniemail.com/faq/","name":"Alumni Email Forwarding FAQ for University IT Staff","description":"Answers for university IT staff on alumni email forwarding: storage, logs, DNS, Google and Microsoft coexistence, API and price.","inLanguage":"en","isPartOf":{"@id":"https://alumniemail.com/#website"},"publisher":{"@id":"https://forwardemail.net/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://alumniemail.com/images/og-image.jpg","width":1200,"height":630},"breadcrumb":{"@id":"https://alumniemail.com/faq/#breadcrumb"},"mainEntity":[{"@type":"Question","name":"What is alumni email forwarding?","acceptedAnswer":{"@type":"Answer","text":"It is a lifetime address on the university's domain that delivers each message to a personal inbox the graduate chooses. The university keeps the address and the graduate keeps receiving mail when they change jobs or providers. There is no alumni mailbox to license or store."}},{"@type":"Question","name":"Which DNS records does Forward Email need?","acceptedAnswer":{"@type":"Answer","text":"Two MX records, mx1.forwardemail.net and mx2.forwardemail.net, both with priority 0, on the domain or subdomain that holds the alumni addresses. Paid plans add one TXT record, forward-email-site-verification= with the value from your dashboard. See how it works."}},{"@type":"Question","name":"Can staff mail stay on Google Workspace or Microsoft 365?","acceptedAnswer":{"@type":"Answer","text":"Yes. Put alumni on a subdomain such as alumni.example.edu and point only that subdomain's MX records at Forward Email. If alumni must share the main domain, keep your current MX records and have Google or Microsoft route addresses they do not host to Forward Email. The migration guide explains both options."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"Forward Email estimates under 10 minutes for the DNS setup itself. DNS changes can take up to 24 to 48 hours to reach every resolver. Planning, alias import and alumni notices take longer and depend on your institution."}},{"@type":"Question","name":"Can we create alumni addresses automatically?","acceptedAnswer":{"@type":"Answer","text":"Yes. The REST API creates, lists, updates and deletes aliases, so a nightly job can add each graduating class from your alumni database. The Enterprise plan has no API rate limit. See the API example."}},{"@type":"Question","name":"How do alumni change their forwarding address?","acceptedAnswer":{"@type":"Answer","text":"Your team or your own alumni portal updates the alias recipients through the dashboard or the API. The case study describes a custom-branded self-service portal for Cambridge alumni. Recipient verification can require each new destination to confirm by email before mail flows."}},{"@type":"Question","name":"Does Forward Email store forwarded alumni mail?","acceptedAnswer":{"@type":"Answer","text":"No. Forward Email processes forwarded mail in memory and does not write it to disk. It stores error logs for 4xx and 5xx SMTP responses for 7 days, with the error, envelope and headers but not the body or attachments. Source: Do you store emails and their contents?"}},{"@type":"Question","name":"Does forwarding break SPF or DMARC at the destination?","acceptedAnswer":{"@type":"Answer","text":"Forward Email rewrites the envelope sender with SRS, which preserves SPF validation through the forward, and supports ARC so receiving providers can see the original authentication results. SPF, DKIM, DMARC, ARC and SRS are supported on every plan."}},{"@type":"Question","name":"Is the traffic encrypted?","acceptedAnswer":{"@type":"Answer","text":"Yes. Forward Email enforces TLS 1.2 or newer for its connections, including SMTP, and supports MTA-STS. Source: Do you use TLS encryption for email forwarding?"}},{"@type":"Question","name":"Does Forward Email read or scan alumni mail for ads?","acceptedAnswer":{"@type":"Answer","text":"No. Forward Email does not read mail or sell data, and the case study states it never scans email content. The code is open source, so your team can check how mail is handled."}},{"@type":"Question","name":"Is there a Data Processing Agreement?","acceptedAnswer":{"@type":"Answer","text":"Yes. The DPA at forwardemail.net/dpa is accepted with the terms of service. A countersigned copy and custom DPA terms come with the Enterprise license. See Forward Email's GDPR page."}},{"@type":"Question","name":"Can we audit or self-host the code?","acceptedAnswer":{"@type":"Answer","text":"Yes. The service is open source on GitHub and can be self-hosted with Docker using the self-hosted guide."}},{"@type":"Question","name":"How much does alumni email forwarding cost?","acceptedAnswer":{"@type":"Answer","text":"The Enterprise plan is $250 per month for unlimited domains, with no fee per alias. That is $3,000 per year whether you serve 5,000 or 100,000 alumni. Mailbox storage, if you offer it, is extra at $3 per month per 10 GB. See the cost comparison."}},{"@type":"Question","name":"Why not use the free plan?","acceptedAnswer":{"@type":"Answer","text":"The free plan stores forwarding rules in public DNS TXT records, so anyone can look up where an address forwards. Forward Email's standard terms also do not cover a service used by third parties such as alumni. The Enterprise license adds that terms exception. Source: What is included in the Enterprise License?"}},{"@type":"Question","name":"Can alumni send mail from their university address?","acceptedAnswer":{"@type":"Answer","text":"Yes, if you allow it. Paid plans include outbound SMTP. Each domain needs approval before it can send, and sending limits grow with sender reputation. The free plan only forwards incoming mail."}},{"@type":"Question","name":"Which universities use Forward Email for alumni?","acceptedAnswer":{"@type":"Answer","text":"Forward Email's case study names the University of Cambridge, the University of Maryland, Tufts University and Swarthmore College."}},{"@type":"Question","name":"How do we get started?","acceptedAnswer":{"@type":"Answer","text":"Email support@forwardemail.net or use the Forward Email help form (sign-in required) with your institution's legal name, registered address, registration and VAT numbers where they apply, and the name, title and email of the person who will sign. Forward Email replies with an Enterprise agreement through DocuSign."}}]},{"@type":"BreadcrumbList","@id":"https://alumniemail.com/faq/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://alumniemail.com/"},{"@type":"ListItem","position":2,"name":"FAQ","item":"https://alumniemail.com/faq/"}]}]}</script>
+</head>
+<body>
+<!--email_off--><a class="skip-link" href="#main"><!--/email_off-->Skip to content</a>
+<header class="site-header">
+<div class="container header-content">
+<!--email_off--><a class="logo" href="/"><!--/email_off-->AlumniEmail</a>
+<nav aria-label="Main"><ul class="nav-links">
+<li><!--email_off--><a href="/"><!--/email_off-->Home</a></li>
+<li><!--email_off--><a href="/how-it-works/"><!--/email_off-->How it works</a></li>
+<li><!--email_off--><a href="/migrate-from-google-workspace-microsoft-365/"><!--/email_off-->Migration</a></li>
+<li><!--email_off--><a href="/cost-comparison/"><!--/email_off-->Costs</a></li>
+<li><!--email_off--><a href="/case-study/"><!--/email_off-->Case study</a></li>
+<li><!--email_off--><a href="/faq/" aria-current="page"><!--/email_off-->FAQ</a></li>
+<li><!--email_off--><a href="/about/"><!--/email_off-->About</a></li>
+<li><!--email_off--><a class="nav-cta" href="https://forwardemail.net/en/private-business-email"><!--/email_off-->Forward Email pricing</a></li>
+</ul></nav>
+</div>
+</header>
+<main id="main">
+<div class="hero page-hero">
+<div class="container">
+<div class="">
+<nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><!--email_off--><a href="/"><!--/email_off-->Home</a></li><li><span aria-current="page">FAQ</span></li></ol></nav>
+<h1>Alumni email forwarding FAQ for IT staff</h1>
+<p class="lead">Short answers to the questions university IT, security and alumni relations teams ask about running lifetime alumni addresses on Forward Email. Each answer links to the Forward Email source.</p>
+
+</div>
+</div>
+</div>
+<section class="band" aria-labelledby="service-and-setup">
+<div class="container">
+<div class="prose">
+<h2 id="service-and-setup">Service and setup</h2>
+<div class="faq-item">
+<h3 id="what-is-alumni-email-forwarding">What is alumni email forwarding?</h3>
+<p>It is a lifetime address on the university's domain that delivers each message to a personal inbox the graduate chooses. The university keeps the address and the graduate keeps receiving mail when they change jobs or providers. There is no alumni mailbox to license or store.</p>
+</div>
+<div class="faq-item">
+<h3 id="which-dns-records-does-forward-email-need">Which DNS records does Forward Email need?</h3>
+<p>Two MX records, <code>mx1.forwardemail.net</code> and <code>mx2.forwardemail.net</code>, both with priority 0, on the domain or subdomain that holds the alumni addresses. Paid plans add one TXT record, <code>forward-email-site-verification=</code> with the value from your dashboard. See <!--email_off--><a href="/how-it-works/#which-dns-records-do-you-need"><!--/email_off-->how it works</a>.</p>
+</div>
+<div class="faq-item">
+<h3 id="can-staff-mail-stay-on-google-workspace-or-microsoft-365">Can staff mail stay on Google Workspace or Microsoft 365?</h3>
+<p>Yes. Put alumni on a subdomain such as <code>alumni.example.edu</code> and point only that subdomain's MX records at Forward Email. If alumni must share the main domain, keep your current MX records and have Google or Microsoft route addresses they do not host to Forward Email. The <!--email_off--><a href="/migrate-from-google-workspace-microsoft-365/"><!--/email_off-->migration guide</a> explains both options.</p>
+</div>
+<div class="faq-item">
+<h3 id="how-long-does-setup-take">How long does setup take?</h3>
+<p>Forward Email estimates under 10 minutes for the DNS setup itself. DNS changes can take up to 24 to 48 hours to reach every resolver. Planning, alias import and alumni notices take longer and depend on your institution.</p>
+</div>
+<div class="faq-item">
+<h3 id="can-we-create-alumni-addresses-automatically">Can we create alumni addresses automatically?</h3>
+<p>Yes. The <!--email_off--><a href="https://forwardemail.net/en/email-api"><!--/email_off-->REST API</a> creates, lists, updates and deletes aliases, so a nightly job can add each graduating class from your alumni database. The Enterprise plan has no API rate limit. See the <!--email_off--><a href="/how-it-works/#how-do-you-create-aliases-from-your-alumni-database"><!--/email_off-->API example</a>.</p>
+</div>
+<div class="faq-item">
+<h3 id="how-do-alumni-change-their-forwarding-address">How do alumni change their forwarding address?</h3>
+<p>Your team or your own alumni portal updates the alias recipients through the dashboard or the API. The case study describes a custom-branded self-service portal for Cambridge alumni. Recipient verification can require each new destination to confirm by email before mail flows.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="privacy-and-security">
+<div class="container">
+<div class="prose">
+<h2 id="privacy-and-security">Privacy and security</h2>
+<div class="faq-item">
+<h3 id="does-forward-email-store-forwarded-alumni-mail">Does Forward Email store forwarded alumni mail?</h3>
+<p>No. Forward Email processes forwarded mail in memory and does not write it to disk. It stores error logs for 4xx and 5xx SMTP responses for 7 days, with the error, envelope and headers but not the body or attachments. Source: <!--email_off--><a href="https://forwardemail.net/en/faq#do-you-store-emails-and-their-contents"><!--/email_off-->Do you store emails and their contents?</a></p>
+</div>
+<div class="faq-item">
+<h3 id="does-forwarding-break-spf-or-dmarc-at-the-destination">Does forwarding break SPF or DMARC at the destination?</h3>
+<p>Forward Email rewrites the envelope sender with SRS, which preserves SPF validation through the forward, and supports ARC so receiving providers can see the original authentication results. SPF, DKIM, DMARC, ARC and SRS are supported on every plan.</p>
+</div>
+<div class="faq-item">
+<h3 id="is-the-traffic-encrypted">Is the traffic encrypted?</h3>
+<p>Yes. Forward Email enforces TLS 1.2 or newer for its connections, including SMTP, and supports MTA-STS. Source: <!--email_off--><a href="https://forwardemail.net/en/faq#do-you-use-tls-encryption-for-email-forwarding"><!--/email_off-->Do you use TLS encryption for email forwarding?</a></p>
+</div>
+<div class="faq-item">
+<h3 id="does-forward-email-read-or-scan-alumni-mail-for-ads">Does Forward Email read or scan alumni mail for ads?</h3>
+<p>No. Forward Email does not read mail or sell data, and the case study states it never scans email content. The code is open source, so your team can check how mail is handled.</p>
+</div>
+<div class="faq-item">
+<h3 id="is-there-a-data-processing-agreement">Is there a Data Processing Agreement?</h3>
+<p>Yes. The DPA at <!--email_off--><a href="https://forwardemail.net/en/dpa"><!--/email_off-->forwardemail.net/dpa</a> is accepted with the terms of service. A countersigned copy and custom DPA terms come with the Enterprise license. See <!--email_off--><a href="https://forwardemail.net/en/gdpr"><!--/email_off-->Forward Email's GDPR page</a>.</p>
+</div>
+<div class="faq-item">
+<h3 id="can-we-audit-or-self-host-the-code">Can we audit or self-host the code?</h3>
+<p>Yes. The service is open source on <!--email_off--><a href="https://github.com/forwardemail/forwardemail.net"><!--/email_off-->GitHub</a> and can be self-hosted with Docker using the <!--email_off--><a href="https://forwardemail.net/en/self-hosted"><!--/email_off-->self-hosted guide</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="plans-and-pricing">
+<div class="container">
+<div class="prose">
+<h2 id="plans-and-pricing">Plans and pricing</h2>
+<div class="faq-item">
+<h3 id="how-much-does-alumni-email-forwarding-cost">How much does alumni email forwarding cost?</h3>
+<p>The Enterprise plan is $250 per month for unlimited domains, with no fee per alias. That is $3,000 per year whether you serve 5,000 or 100,000 alumni. Mailbox storage, if you offer it, is extra at $3 per month per 10 GB. See the <!--email_off--><a href="/cost-comparison/"><!--/email_off-->cost comparison</a>.</p>
+</div>
+<div class="faq-item">
+<h3 id="why-not-use-the-free-plan">Why not use the free plan?</h3>
+<p>The free plan stores forwarding rules in public DNS TXT records, so anyone can look up where an address forwards. Forward Email's standard terms also do not cover a service used by third parties such as alumni. The Enterprise license adds that terms exception. Source: <!--email_off--><a href="https://forwardemail.net/en/faq#what-is-included-in-the-enterprise-license"><!--/email_off-->What is included in the Enterprise License?</a></p>
+</div>
+<div class="faq-item">
+<h3 id="can-alumni-send-mail-from-their-university-address">Can alumni send mail from their university address?</h3>
+<p>Yes, if you allow it. Paid plans include outbound SMTP. Each domain needs approval before it can send, and sending limits grow with sender reputation. The free plan only forwards incoming mail.</p>
+</div>
+<div class="faq-item">
+<h3 id="which-universities-use-forward-email-for-alumni">Which universities use Forward Email for alumni?</h3>
+<p>Forward Email's <!--email_off--><a href="/case-study/"><!--/email_off-->case study</a> names the University of Cambridge, the University of Maryland, Tufts University and Swarthmore College.</p>
+</div>
+<div class="faq-item">
+<h3 id="how-do-we-get-started">How do we get started?</h3>
+<p>Email <!--email_off--><a href="mailto:support@forwardemail.net">support@forwardemail.net</a><!--/email_off--> or use the <!--email_off--><a href="https://forwardemail.net/en/help"><!--/email_off-->Forward Email help form</a> (sign-in required) with your institution's legal name, registered address, registration and VAT numbers where they apply, and the name, title and email of the person who will sign. Forward Email replies with an Enterprise agreement through DocuSign.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-brand">
+<!--email_off--><a class="logo" href="/"><!--/email_off-->AlumniEmail</a>
+<p>Guides on lifetime alumni email forwarding for universities, written by the Forward Email team.</p>
+<p>Forward Email is an open-source email service. Its <!--email_off--><a href="https://github.com/forwardemail/forwardemail.net"><!--/email_off-->source code is on GitHub</a>.</p>
+</div>
+<div class="footer-links">
+<div>
+<h2>Alumni email guides</h2>
+<ul>
+<li><!--email_off--><a href="/"><!--/email_off-->Home</a></li>
+<li><!--email_off--><a href="/how-it-works/"><!--/email_off-->How it works</a></li>
+<li><!--email_off--><a href="/migrate-from-google-workspace-microsoft-365/"><!--/email_off-->Migration</a></li>
+<li><!--email_off--><a href="/cost-comparison/"><!--/email_off-->Costs</a></li>
+<li><!--email_off--><a href="/case-study/"><!--/email_off-->Case study</a></li>
+<li><!--email_off--><a href="/faq/"><!--/email_off-->FAQ</a></li>
+<li><!--email_off--><a href="/about/"><!--/email_off-->About</a></li>
+</ul>
+</div>
+<div>
+<h2>Forward Email</h2>
+<ul>
+<li><!--email_off--><a href="https://forwardemail.net/en/private-business-email"><!--/email_off-->Plans and pricing</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/blog/docs/alumni-email-forwarding-university-case-study"><!--/email_off-->University case study</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/email-api"><!--/email_off-->Email API reference</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/faq"><!--/email_off-->Forward Email FAQ</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/privacy"><!--/email_off-->Privacy policy</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/terms"><!--/email_off-->Terms of use</a></li>
+<li><!--email_off--><a href="https://github.com/forwardemail"><!--/email_off-->Forward Email on GitHub</a></li>
+<li><!--email_off--><a href="https://x.com/fwdemail"><!--/email_off-->Forward Email on X</a></li>
+<li><!--email_off--><a href="https://www.youtube.com/forwardemail"><!--/email_off-->Forward Email on YouTube</a></li>
+</ul>
+</div>
+<div>
+<h2>About this site</h2>
+<ul>
+<li><!--email_off--><a href="https://github.com/forwardemail/alumniemail.com"><!--/email_off-->Source on GitHub</a></li>
+<li><!--email_off--><a href="https://github.com/forwardemail/alumniemail.com/issues"><!--/email_off-->Report a problem</a></li>
+<li><!--email_off--><a href="/about/#privacy-on-this-site"><!--/email_off-->Privacy on this site</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>Run by the Forward Email team. Not affiliated with the universities named on this site.</p>
+<p><!--email_off--><a href="https://github.com/forwardemail/alumniemail.com/blob/main/content/faq.md"><!--/email_off-->Edit this page on GitHub</a></p>
+</div>
+</div>
+</footer>
+</body>
+</html>

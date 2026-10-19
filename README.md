@@ -1,133 +1,78 @@
-# Alumni Email Forwarding | Lifetime University Email Address Solution
+# alumniemail.com
 
-## Lifetime Alumni Email Addresses at 99.7% Less Cost
+Source for [alumniemail.com](https://alumniemail.com), a guide for universities on lifetime alumni email forwarding with [Forward Email](https://forwardemail.net). The Forward Email team runs it. The site is not affiliated with the universities it names.
 
-Keep alumni connected to your institution forever without the high costs of Google Workspace or Office 365
+## Pages
 
-Trusted by leading universities including UMD, Tufts, Swarthmore, and the University of Cambridge
+| URL | Source | Purpose |
+|---|---|---|
+| `/` | `content/index.md` | Overview, benefits, case study figures, setup summary |
+| `/how-it-works/` | `content/how-it-works.md` | MX and TXT records, aliases, SRS and ARC, API examples |
+| `/migrate-from-google-workspace-microsoft-365/` | `content/migrate-from-google-workspace-microsoft-365.md` | Moving alumni accounts to forwarding |
+| `/cost-comparison/` | `content/cost-comparison.md` | Sourced cost tables and a cost calculator |
+| `/case-study/` | `content/case-study.md` | Summary of the Forward Email university case study |
+| `/faq/` | `content/faq.md` | FAQ for university IT staff (with FAQPage JSON-LD) |
+| `/about/` | `content/about.md` | Who runs the site, contacts, sources, privacy |
+| `/404.html` | `content/404.md` | Not found page |
 
-[Get Started](https://forwardemail.net) | [Learn More](https://forwardemail.net)
+## How the site is built
 
-## Why Choose Alumni Email Forwarding?
+GitHub Pages serves the committed files from the root of `main`. There is no build step in CI, so the generated HTML is committed.
 
-### Massive Cost Savings
-Reduce alumni email costs by up to 99.7% compared to Google Workspace or Office 365 licenses while maintaining the same professional email addresses. According to a recent study by EDUCAUSE, universities can save an average of $5.80 per alumni account per month by switching to email forwarding solutions.
+`scripts/build.js` is a small Node.js script with no dependencies. It reads `content/*.md` and writes:
 
-### Lifetime Connection
-Alumni keep their trusted university email addresses forever, strengthening their lifelong connection to your institution. Research shows that maintaining this connection increases alumni engagement and donation rates by up to 27%.
+- `index.html` and `<slug>/index.html` for each page, plus `404.html`
+- `<slug>/index.md`, a clean Markdown copy of each page
+- `sitemap.xml`, `robots.txt`, `llms.txt`, `llms-full.txt` and `site.webmanifest`
+- `css/style.min.css`, minified from `css/style.css`
 
-### Zero Disruption
-Seamless transition with no changes to existing alumni email addresses. Alumni business cards and resumes remain valid, preventing the professional disruption that typically occurs when email addresses change.
+Each page gets the shared header, navigation and footer, canonical and Open Graph tags, and JSON-LD (Organization, WebSite, WebPage, BreadcrumbList, plus FAQPage, HowTo or Service where the page supports it).
 
-### Quick Migration
-Go live in days, not months, with comprehensive migration planning and full onboarding support for any platform. Forward Email's implementation process has been refined through partnerships with multiple higher education institutions.
+## Editing
 
-## Enterprise-Grade Features
+1. Edit a file in `content/` (or `css/style.css`).
+2. Run `node scripts/build.js` (Node 18 or newer).
+3. Commit the source and the generated files together.
 
-### Self-Service Portal
-Empower alumni to update their forwarding addresses with a simple 1-click process through an intuitive self-service portal.
+Each content file starts with front matter:
 
-### Enhanced Security
-Advanced phishing protection, SPF, DKIM, and DMARC support, with real-time threat monitoring and domain spoofing prevention. Forward Email maintains industry-standard security protocols to protect your institution's reputation.
-
-### Reliable Infrastructure
-99.99% uptime guarantee with a global server network, unlimited email volume, and automatic failover systems. Forward Email's infrastructure is designed for enterprise-level reliability.
-
-### Detailed Analytics
-Comprehensive usage monitoring, custom reports, and audit logging to track alumni engagement and system performance.
-
-### 24/7 Support
-Round-the-clock technical help, migration specialists, and a dedicated success team to ensure smooth operations.
-
-### Bulk Management
-Easily manage thousands of alumni accounts with bulk updates, API access, and role-based administrative controls.
-
-## Trusted by Leading Universities
-
-- University of Maryland
-- Tufts University
-- Swarthmore College
-- University of Cambridge
-
-> "Implementing alumni email forwarding has allowed us to maintain our graduates' connection to the university while significantly reducing our IT costs. The migration was seamless, and our alumni appreciate the lifetime access to their university email addresses."
-> 
-> — Director of Alumni Relations, Major University
-
-## Automate Alumni Email Management with API Integration
-
-Forward Email's powerful API enables universities to automate the creation and management of alumni email addresses at scale. Integrate directly with your student information system or alumni database for seamless automation.
-
-### API Capabilities:
-- Automatically create alumni email addresses upon graduation
-- Bulk import existing alumni accounts
-- Update forwarding destinations programmatically
-- Generate secure access credentials
-- Monitor usage and delivery statistics
-- Implement custom workflows and integrations
-
-The Forward Email API is RESTful, well-documented, and designed for developers to quickly implement robust email forwarding solutions for educational institutions of any size.
-
-[Explore API Documentation](https://forwardemail.net/email-api)
-
-```javascript
-// Example: Creating a new alumni email address
-const response = await fetch('https://api.forwardemail.net/v1/domains/example.edu/aliases', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Basic ${Buffer.from(YOUR_API_KEY + ":").toString('base64')}`
-  },
-  body: JSON.stringify({
-    name: 'alumni.2025',
-    recipients:: ['graduate@personal-email.com'],
-    labels: ['class-of-2025', 'engineering']
-  })
-});
-
-const data = await response.json();
-console.log('New alumni email created:', data);
+```yaml
+---
+title: Page title for search results (50 to 60 characters)
+description: Meta description (about 120 to 140 characters)
+h1: Visible page heading
+lead: Opening sentence or two under the heading
+nav: Label in the navigation (omit to leave the page out of the menu)
+order: Position in the navigation
+schema: FAQPage or AboutPage (optional)
+howto: Name for HowTo JSON-LD built from a :::steps block (optional)
+service: true to add the Service and Offer JSON-LD (optional)
+scripts: /js/file.js (optional, comma separated)
+---
 ```
 
-## Simple Implementation Process
+The body uses a small Markdown subset: `##` to `####` headings, paragraphs, lists, tables (with an optional `Table: caption` line above), fenced code, `**bold**`, `` `code` `` and links. Each `##` heading starts a new page section. These blocks are also available:
 
-### 1. Consultation
-We'll discuss your specific needs, current setup, and migration timeline to create a customized plan.
+- `:::cards` with one `###` heading per card. Add `{icon=/images/svg/name.svg}` after a heading for an icon.
+- `:::steps` with one `###` heading per numbered step.
+- `:::faq` with one `###` question per answer. On a page with `schema: FAQPage` these become FAQPage JSON-LD.
+- `:::note` for a highlighted paragraph.
+- `:::buttons` with one link per paragraph.
 
-### 2. Domain Setup
-Configure your domain's MX records to point to Forward Email's servers with our step-by-step guidance.
+Lines that start with `<` are passed through as raw HTML and left out of the Markdown copies.
 
-### 3. Account Migration
-Import your alumni database and set up forwarding rules for each account with our bulk management tools.
+## Facts and sources
 
-### 4. Testing & Validation
-Thoroughly test the system with a pilot group before full deployment to ensure everything works perfectly.
+Every claim about Forward Email must come from a page on forwardemail.net and link to it. University names and cost figures come from the [Forward Email university case study](https://forwardemail.net/en/blog/docs/alumni-email-forwarding-university-case-study). Do not add testimonials, logos or numbers that a source does not support.
 
-### 5. Go Live
-Switch over to the new system with zero downtime and comprehensive support throughout the transition.
+## Other files
 
-## Alumni Email Solutions Comparison
+- `.well-known/security.txt`: security contact. Update the `Expires` date before it passes.
+- `.nojekyll`: tells GitHub Pages to serve files as they are, including `.well-known/`.
+- `fonts/`: self-hosted Graduate and Montserrat (SIL Open Font License, see the `OFL-*.txt` files).
+- `images/`: icons, the Open Graph image (`og-image.jpg`, 1200x630) and card illustrations.
+- `js/calculator.js`: the only script, used by the cost calculator.
 
-| Feature | Forward Email | Google Workspace |
-|---------|--------------|-----------------|
-| Annual Cost (10,000 alumni) | $3,000 (fixed) | $60,000 |
-| Cost per Alumnus | Fixed $250/month | $3/year |
-| Lifetime Access | ✓ | ✗ (Recurring cost) |
-| Implementation Time | Days | Weeks to Months |
-| Maintenance Required | Minimal | Significant |
-| Storage Management | Not Required | Required |
-| API Access | ✓ | ✓ |
+## Privacy
 
-Cost comparison based on standard educational pricing for Google Workspace as of April 2025.
-
-## Ready to Transform Your Alumni Email Program?
-
-Contact us today to discuss how Forward Email can help your institution provide lifetime alumni email addresses while dramatically reducing costs.
-
-[Request Consultation](https://forwardemail.net/help) | [View Enterprise Plans](https://forwardemail.net/pricing)
-
-## Citations & References
-
-1. EDUCAUSE. (2024). *Higher Education IT Costs Analysis Report*. Retrieved April 6, 2025, from EDUCAUSE Research.
-2. Council for Advancement and Support of Education (CASE). (2024). *Alumni Engagement Benchmarking Study*. Retrieved April 6, 2025, from CASE Research.
-3. Forward Email. (2025). *Email Security Documentation*. Retrieved April 6, 2025, from [https://forwardemail.net/security](https://forwardemail.net/security)
-4. Google Workspace & Microsoft 365. (2025). *Educational Institution Pricing*. Retrieved April 6, 2025, from respective provider websites.
+The site sets no cookies and loads no analytics, trackers or third-party resources.

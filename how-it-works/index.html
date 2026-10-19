@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Alumni Email Forwarding Works: MX, DNS and Aliases</title>
+<meta name="description" content="How alumni email forwarding works with Forward Email: MX and TXT records, one alias per graduate, SRS, ARC and API provisioning.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://alumniemail.com/how-it-works/">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="theme-color" content="#1a365d">
+<meta name="author" content="Forward Email">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/images/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/fonts/graduate-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/style.min.css">
+<link rel="alternate" type="text/markdown" href="/how-it-works/index.md" title="Markdown version">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="AlumniEmail">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="How Alumni Email Forwarding Works: MX, DNS and Aliases">
+<meta property="og:description" content="How alumni email forwarding works with Forward Email: MX and TXT records, one alias per graduate, SRS, ARC and API provisioning.">
+<meta property="og:url" content="https://alumniemail.com/how-it-works/">
+<meta property="og:image" content="https://alumniemail.com/images/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AlumniEmail: lifetime alumni email forwarding for universities, from the Forward Email team">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How Alumni Email Forwarding Works: MX, DNS and Aliases">
+<meta name="twitter:description" content="How alumni email forwarding works with Forward Email: MX and TXT records, one alias per graduate, SRS, ARC and API provisioning.">
+<meta name="twitter:image" content="https://alumniemail.com/images/og-image.jpg">
+<meta name="twitter:image:alt" content="AlumniEmail: lifetime alumni email forwarding for universities, from the Forward Email team">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://forwardemail.net/#organization","name":"Forward Email","url":"https://forwardemail.net","logo":"https://forwardemail.net/img/logo-square-180x180.png","sameAs":["https://github.com/forwardemail","https://x.com/fwdemail","https://www.youtube.com/forwardemail","https://www.reddit.com/r/forwardemail/"],"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"support@forwardemail.net","url":"https://forwardemail.net/en/faq"},{"@type":"ContactPoint","contactType":"security","email":"security@forwardemail.net","url":"https://forwardemail.net/en/security"}]},{"@type":"WebSite","@id":"https://alumniemail.com/#website","url":"https://alumniemail.com/","name":"AlumniEmail","description":"Guides for university IT and alumni relations teams on lifetime alumni email forwarding with Forward Email: how it works, DNS setup, migration from Google Workspace or Microsoft 365, sourced costs and a published university case study.","inLanguage":"en","publisher":{"@id":"https://forwardemail.net/#organization"}},{"@type":"WebPage","@id":"https://alumniemail.com/how-it-works/#webpage","url":"https://alumniemail.com/how-it-works/","name":"How Alumni Email Forwarding Works: MX, DNS and Aliases","description":"How alumni email forwarding works with Forward Email: MX and TXT records, one alias per graduate, SRS, ARC and API provisioning.","inLanguage":"en","isPartOf":{"@id":"https://alumniemail.com/#website"},"publisher":{"@id":"https://forwardemail.net/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://alumniemail.com/images/og-image.jpg","width":1200,"height":630},"breadcrumb":{"@id":"https://alumniemail.com/how-it-works/#breadcrumb"}},{"@type":"BreadcrumbList","@id":"https://alumniemail.com/how-it-works/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://alumniemail.com/"},{"@type":"ListItem","position":2,"name":"How it works","item":"https://alumniemail.com/how-it-works/"}]},{"@type":"HowTo","@id":"https://alumniemail.com/how-it-works/#howto","name":"Set up alumni email forwarding with Forward Email","step":[{"@type":"HowToStep","position":1,"name":"Get an Enterprise agreement","text":"Contact Forward Email for the Enterprise plan. It covers use by people outside your staff, such as alumni, which the standard terms do not."},{"@type":"HowToStep","position":2,"name":"Add the domain","text":"Add alumni.example.edu in the Forward Email dashboard and copy the verification value it shows."},{"@type":"HowToStep","position":3,"name":"Publish DNS records","text":"Add the two MX records and the TXT verification record at your DNS provider, then run the verification check."},{"@type":"HowToStep","position":4,"name":"Create aliases","text":"Import aliases through the API from your alumni database, or add them in the dashboard for a pilot group."},{"@type":"HowToStep","position":5,"name":"Test and announce","text":"Send test messages from outside providers, confirm delivery and headers, then tell alumni about their addresses."}]}]}</script>
+</head>
+<body>
+<!--email_off--><a class="skip-link" href="#main"><!--/email_off-->Skip to content</a>
+<header class="site-header">
+<div class="container header-content">
+<!--email_off--><a class="logo" href="/"><!--/email_off-->AlumniEmail</a>
+<nav aria-label="Main"><ul class="nav-links">
+<li><!--email_off--><a href="/"><!--/email_off-->Home</a></li>
+<li><!--email_off--><a href="/how-it-works/" aria-current="page"><!--/email_off-->How it works</a></li>
+<li><!--email_off--><a href="/migrate-from-google-workspace-microsoft-365/"><!--/email_off-->Migration</a></li>
+<li><!--email_off--><a href="/cost-comparison/"><!--/email_off-->Costs</a></li>
+<li><!--email_off--><a href="/case-study/"><!--/email_off-->Case study</a></li>
+<li><!--email_off--><a href="/faq/"><!--/email_off-->FAQ</a></li>
+<li><!--email_off--><a href="/about/"><!--/email_off-->About</a></li>
+<li><!--email_off--><a class="nav-cta" href="https://forwardemail.net/en/private-business-email"><!--/email_off-->Forward Email pricing</a></li>
+</ul></nav>
+</div>
+</header>
+<main id="main">
+<div class="hero page-hero">
+<div class="container">
+<div class="">
+<nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><!--email_off--><a href="/"><!--/email_off-->Home</a></li><li><span aria-current="page">How it works</span></li></ol></nav>
+<h1>How alumni email forwarding works</h1>
+<p class="lead">Mail for an alumni address reaches Forward Email through your domain's MX records. Forward Email looks up the alias, then sends the message on to the graduate's personal inbox without storing it.</p>
+
+</div>
+</div>
+</div>
+<section class="band" aria-labelledby="what-happens-when-someone-emails-an-alumni-address">
+<div class="container">
+<div class="prose">
+<h2 id="what-happens-when-someone-emails-an-alumni-address">What happens when someone emails an alumni address?</h2>
+<p>A message to <code><!--email_off-->jane.doe@alumni.example.edu<!--/email_off--></code> follows the same path as any other email, with one extra hop:</p>
+<ol><li>The sender's mail server looks up the MX records for <code>alumni.example.edu</code> and finds <code>mx1.forwardemail.net</code> and <code>mx2.forwardemail.net</code>.</li><li>Forward Email accepts the connection and checks the sender against its allowlist, denylist, greylisting and rate limits.</li><li>It reads the alias configuration for <code>jane.doe</code> and finds the destination, for example a Gmail or Outlook.com address.</li><li>It rewrites the envelope sender with the Sender Rewriting Scheme (SRS) and adds ARC headers, so authentication results survive the forward.</li><li>It delivers the message to the destination over TLS. The message is processed in memory and is not written to disk.</li></ol>
+<p>The <!--email_off--><a href="https://forwardemail.net/en/faq#how-does-your-email-forwarding-system-work"><!--/email_off-->Forward Email FAQ</a> describes each SMTP step in detail.</p>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="which-dns-records-do-you-need">
+<div class="container">
+<div class="prose">
+<h2 id="which-dns-records-do-you-need">Which DNS records do you need?</h2>
+<p>You need two MX records on the domain that holds the alumni addresses. On a paid plan you also add one TXT record that proves you own the domain. The verification value comes from your Forward Email dashboard.</p>
+<div class="table-wrap"><table><caption>DNS records for an alumni domain on Forward Email</caption><thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Priority</th><th scope="col">Value</th></tr></thead><tbody>
+<tr><th scope="row"><code>alumni</code> (or <code>@</code> for the root domain)</th><td>MX</td><td>0</td><td><code>mx1.forwardemail.net</code></td></tr>
+<tr><th scope="row"><code>alumni</code> (or <code>@</code> for the root domain)</th><td>MX</td><td>0</td><td><code>mx2.forwardemail.net</code></td></tr>
+<tr><th scope="row"><code>alumni</code> (or <code>@</code> for the root domain)</th><td>TXT</td><td></td><td><code>forward-email-site-verification=</code> followed by your value</td></tr>
+</tbody></table></div>
+<p>Remove any other MX records on that name. Both Forward Email records must exist. DNS changes can take up to 24 to 48 hours to reach every resolver, though they often apply sooner, so lower the TTL a day ahead if you are switching from another provider. Source: <!--email_off--><a href="https://forwardemail.net/en/faq#how-do-i-get-started-and-set-up-email-forwarding"><!--/email_off-->How do I get started and set up email forwarding?</a></p>
+<p>If alumni will also send mail from their address, add SPF, DKIM and DMARC records as described in the <!--email_off--><a href="https://forwardemail.net/en/faq#how-do-i-set-up-spf-for-forward-email"><!--/email_off-->Forward Email FAQ</a>. Forward Email's SPF value is <code>v=spf1 a include:spf.forwardemail.net -all</code>.</p>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="should-alumni-use-a-subdomain">
+<div class="container">
+<div class="prose">
+<h2 id="should-alumni-use-a-subdomain">Should alumni use a subdomain?</h2>
+<p>A subdomain is the simplest choice when staff and current students already receive mail on the main domain through Google Workspace or Microsoft 365. MX records belong to one host name, so <code>alumni.example.edu</code> can point to Forward Email while <code>example.edu</code> keeps its current provider. Nothing changes for staff mail.</p>
+<p>If alumni addresses must stay on the main domain, the domain can still have only one set of MX records. In that case your current provider receives all mail and routes addresses it does not recognize to Forward Email. The <!--email_off--><a href="/migrate-from-google-workspace-microsoft-365/"><!--/email_off-->migration guide</a> covers both options.</p>
+<p>On paid plans you can also turn on <strong>wildcard subdomain forwarding</strong>, which lets every subdomain without its own records inherit the root domain's aliases. It is off by default and set per domain.</p>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="how-are-alumni-addresses-set-up">
+<div class="container">
+<div class="prose">
+<h2 id="how-are-alumni-addresses-set-up">How are alumni addresses set up?</h2>
+<p>Each graduate gets one <strong>alias</strong>. An alias has a name (the part before the <code>@</code>) and one or more recipients.</p>
+<ul><li><strong>One alias per graduate.</strong> <code>jane.doe</code> forwards to <code><!--email_off-->jane@example.com<!--/email_off--></code>. Graduates can have more than one recipient.</li><li><strong>Recipient verification.</strong> With recipient verification on, a new destination receives a confirmation link, and mail flows only after the graduate clicks it. This stops typos from sending alumni mail to a stranger.</li><li><strong>Catch-all and patterns.</strong> A catch-all alias receives mail for any name that has no alias. Regular expressions can route whole patterns of names.</li><li><strong>Disabling an address.</strong> A disabled alias can accept mail quietly (code 250), ask senders to retry later (421) or reject mail permanently (550).</li><li><strong>Labels.</strong> Labels such as a class year help you find and update groups of aliases.</li></ul>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="set-up-alumni-forwarding-step-by-step">
+<div class="container">
+<div class="prose">
+<h2 id="set-up-alumni-forwarding-step-by-step">Set up alumni forwarding step by step</h2>
+<ol class="steps">
+<li class="step">
+<h3 id="get-an-enterprise-agreement">Get an Enterprise agreement</h3>
+<p>Contact Forward Email for the Enterprise plan. It covers use by people outside your staff, such as alumni, which the standard terms do not.</p>
+</li>
+<li class="step">
+<h3 id="add-the-domain">Add the domain</h3>
+<p>Add <code>alumni.example.edu</code> in the Forward Email dashboard and copy the verification value it shows.</p>
+</li>
+<li class="step">
+<h3 id="publish-dns-records">Publish DNS records</h3>
+<p>Add the two MX records and the TXT verification record at your DNS provider, then run the verification check.</p>
+</li>
+<li class="step">
+<h3 id="create-aliases">Create aliases</h3>
+<p>Import aliases through the API from your alumni database, or add them in the dashboard for a pilot group.</p>
+</li>
+<li class="step">
+<h3 id="test-and-announce">Test and announce</h3>
+<p>Send test messages from outside providers, confirm delivery and headers, then tell alumni about their addresses.</p>
+</li>
+</ol>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="how-do-you-create-aliases-from-your-alumni-database">
+<div class="container">
+<div class="prose">
+<h2 id="how-do-you-create-aliases-from-your-alumni-database">How do you create aliases from your alumni database?</h2>
+<p>The <!--email_off--><a href="https://forwardemail.net/en/email-api#create-new-domain-alias"><!--/email_off-->Forward Email API</a> creates an alias with one request. Authenticate with your API token as the Basic Auth user name and an empty password.</p>
+<pre data-lang="sh"><code><span class="k">curl</span> -X POST https://api.forwardemail.net/v1/domains/alumni.example.edu/aliases \
+  -u <span class="s">&quot;$API_TOKEN:&quot;</span> \
+  -H <span class="s">&quot;Content-Type: application/json&quot;</span> \
+  -d <span class="s">'{&quot;name&quot;: &quot;jane.doe&quot;, &quot;recipients&quot;: [&quot;<!--email_off-->jane@example.com<!--/email_off-->&quot;], &quot;labels&quot;: [&quot;class-of-2025&quot;], &quot;has_recipient_verification&quot;: true}'</span></code></pre>
+<p>The same request from Node.js, for a nightly sync job:</p>
+<pre data-lang="js"><code><span class="c">// Create a lifetime alumni address for one graduate</span>
+<span class="k">const</span> token = process.env.FORWARD_EMAIL_API_TOKEN;
+<span class="k">const</span> response = <span class="k">await</span> fetch(<span class="s">'https://api.forwardemail.net/v1/domains/alumni.example.edu/aliases'</span>, {
+  method: <span class="s">'POST'</span>,
+  headers: {
+    <span class="s">'Content-Type'</span>: <span class="s">'application/json'</span>,
+    Authorization: <span class="s">'Basic '</span> + Buffer.from(token + <span class="s">':'</span>).toString(<span class="s">'base64'</span>)
+  },
+  body: JSON.stringify({
+    name: <span class="s">'jane.doe'</span>,
+    recipients: [<span class="s">'<!--email_off-->jane@example.com<!--/email_off-->'</span>],
+    labels: [<span class="s">'class-of-2025'</span>],
+    has_recipient_verification: <span class="k">true</span>
+  })
+});
+<span class="k">const</span> alias = <span class="k">await</span> response.json();</code></pre>
+<p>To change a destination later, send <code>PUT /v1/domains/alumni.example.edu/aliases/:alias_id</code> with new <code>recipients</code>. To retire an address, set <code>is_enabled</code> to <code>false</code>. The <!--email_off--><a href="https://forwardemail.net/en/email-api"><!--/email_off-->API reference</a> lists every field.</p>
+</div>
+</div>
+</section>
+<section class="band" aria-labelledby="does-the-free-plan-work-for-alumni-email">
+<div class="container">
+<div class="prose">
+<h2 id="does-the-free-plan-work-for-alumni-email">Does the free plan work for alumni email?</h2>
+<p>The free plan forwards mail with only MX and TXT records and no account. It is meant for your own addresses. On the free plan the forwarding rules live in public TXT records, so anyone can look up where each address forwards. Forward Email's standard terms also do not cover a service used by third parties such as alumni. Paid plans keep aliases out of public DNS, and the Enterprise plan adds a terms exception for third parties and onboarding help. See <!--email_off--><a href="https://forwardemail.net/en/faq#what-is-included-in-the-enterprise-license"><!--/email_off-->Forward Email's Enterprise details</a>.</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-brand">
+<!--email_off--><a class="logo" href="/"><!--/email_off-->AlumniEmail</a>
+<p>Guides on lifetime alumni email forwarding for universities, written by the Forward Email team.</p>
+<p>Forward Email is an open-source email service. Its <!--email_off--><a href="https://github.com/forwardemail/forwardemail.net"><!--/email_off-->source code is on GitHub</a>.</p>
+</div>
+<div class="footer-links">
+<div>
+<h2>Alumni email guides</h2>
+<ul>
+<li><!--email_off--><a href="/"><!--/email_off-->Home</a></li>
+<li><!--email_off--><a href="/how-it-works/"><!--/email_off-->How it works</a></li>
+<li><!--email_off--><a href="/migrate-from-google-workspace-microsoft-365/"><!--/email_off-->Migration</a></li>
+<li><!--email_off--><a href="/cost-comparison/"><!--/email_off-->Costs</a></li>
+<li><!--email_off--><a href="/case-study/"><!--/email_off-->Case study</a></li>
+<li><!--email_off--><a href="/faq/"><!--/email_off-->FAQ</a></li>
+<li><!--email_off--><a href="/about/"><!--/email_off-->About</a></li>
+</ul>
+</div>
+<div>
+<h2>Forward Email</h2>
+<ul>
+<li><!--email_off--><a href="https://forwardemail.net/en/private-business-email"><!--/email_off-->Plans and pricing</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/blog/docs/alumni-email-forwarding-university-case-study"><!--/email_off-->University case study</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/email-api"><!--/email_off-->Email API reference</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/faq"><!--/email_off-->Forward Email FAQ</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/privacy"><!--/email_off-->Privacy policy</a></li>
+<li><!--email_off--><a href="https://forwardemail.net/en/terms"><!--/email_off-->Terms of use</a></li>
+<li><!--email_off--><a href="https://github.com/forwardemail"><!--/email_off-->Forward Email on GitHub</a></li>
+<li><!--email_off--><a href="https://x.com/fwdemail"><!--/email_off-->Forward Email on X</a></li>
+<li><!--email_off--><a href="https://www.youtube.com/forwardemail"><!--/email_off-->Forward Email on YouTube</a></li>
+</ul>
+</div>
+<div>
+<h2>About this site</h2>
+<ul>
+<li><!--email_off--><a href="https://github.com/forwardemail/alumniemail.com"><!--/email_off-->Source on GitHub</a></li>
+<li><!--email_off--><a href="https://github.com/forwardemail/alumniemail.com/issues"><!--/email_off-->Report a problem</a></li>
+<li><!--email_off--><a href="/about/#privacy-on-this-site"><!--/email_off-->Privacy on this site</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>Run by the Forward Email team. Not affiliated with the universities named on this site.</p>
+<p><!--email_off--><a href="https://github.com/forwardemail/alumniemail.com/blob/main/content/how-it-works.md"><!--/email_off-->Edit this page on GitHub</a></p>
+</div>
+</div>
+</footer>
+</body>
+</html>
